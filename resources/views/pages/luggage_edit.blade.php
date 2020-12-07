@@ -195,7 +195,7 @@
                     <td>{{$showdata->vehicle_type2}}</td>
                     <td>{{$showdata->vehicle_type3}}</td>
                     <td>{{$showdata->person_charge}}</td>
-                    <td>{{$showdata->bigo}}</td>
+                    <td>{{$showdata->user_id}}</td>
                 </tr>
                 @endforeach
             </tbody>

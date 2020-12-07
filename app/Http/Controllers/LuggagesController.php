@@ -43,9 +43,7 @@ class LuggagesController extends Controller
 			'drop_city' => 'required',
 			'baggage_name' =>'required',
 			'baggage_weight' => 'required|numeric',
-			'fares_money' => 'required|numeric',
-			'phone_number' => 'required',
-			'person_charge' => 'required'
+			'fares_money' => 'required|numeric'
 		];
 		$customMessages = [
 			'required' => 'ここを入力してください。',
@@ -76,8 +74,9 @@ class LuggagesController extends Controller
 			'bigo' => $request->get('bigo'),
 			'fares_money' => $request->get('fares_money'),
 			'is_consultation' => $request->get('is_consultation'),
-			'phone_number' => $request->get('phone_number'),
-			'person_charge' => $request->get('person_charge')
+			'phone_number' => '027-386-4141',
+			'person_charge' => '担当'
+			
 		]);
 		$luggage->save();
 		session(['luggage_num' => Luggage::count()]);
@@ -152,7 +151,6 @@ class LuggagesController extends Controller
 		if(isset($search_flag) && $search_flag == 'search_start'){
 			session(['search_key' => $request->post()]);
 		}
-		
 		$data['datas'] = DB::table('luggage')->join('users', 'luggage.user_id', '=', 'users.id');
 			
 		$loading_start = session('search_key.loading_start');
@@ -162,14 +160,19 @@ class LuggagesController extends Controller
 			$data['datas']->where('luggage.loading_date','<', session('search_key.loading_end'));
 		}
 
-		$beginplace = session('search_key.beginplace');
+		$beginplaces_str = session('search_key.beginplace');
+
+		$beginplaces_str = substr($beginplaces_str, 0, -1);
+		$beginplace_arr = explode(',', $beginplaces_str);
 		if(isset($beginplace)){
-			$data['datas'] = $data['datas']->whereIn('luggage.loading_space',session('search_key.beginplace'));
+			$data['datas'] = $data['datas']->whereIn('luggage.loading_space',$beginplace_arr);
 		}
 
-		$endplace = session('search_key.endplace');
+		$endplace_str = session('search_key.endplace');
+		$endplace_str = substr($endplace_str, 0, -1);
+		$endplace_arr = explode(',', $endplace_str);
 		if(isset($endplace)){
-			$data['datas'] = $data['datas']->whereIn('luggage.drop_space',session('search_key.endplace'));
+			$data['datas'] = $data['datas']->whereIn('luggage.drop_space',$endplace_arr);
 		}
 
 		$drop_start = session('search_key.drop_start');
@@ -254,7 +257,6 @@ class LuggagesController extends Controller
 				$data['datas']->orderBy($third_sortlist, 'desc');
 			}
 		} 
-
 		$data['datas'] = $data['datas']->Paginate($page_num);
 		$data['page_num'] = $page_num;
 		return view('pages.luggage_search_info',$data);
@@ -292,12 +294,13 @@ class LuggagesController extends Controller
 		$data['page_num'] = 10;
 		return view('pages.luggage_info', $data);
 	}	
-
-
 	public function edit()
 	{
-		$data['showdatas'] = Luggage::Paginate(10);
+		$user_id = auth()->user()->id;
+		$data['showdatas'] = Luggage::query()->where('user_id',$user_id)->Paginate(10);
+		$luggage_num = Luggage::query()->where('user_id', $user_id)->count();
 		$data['page_num'] = 10;
+		session(['luggage_num' => $luggage_num]);
 		$data['luggage_num'] = session('luggage_num');
 		$data['emptycar_num'] = session('emptycar_num');
 		return view('pages.luggage_edit', $data);
@@ -329,7 +332,8 @@ class LuggagesController extends Controller
 		} else {
 			$page_number = 10;
 		}
-		$showdata = Luggage::query();
+		$user_id = auth()->user()->id;
+		$showdata = Luggage::query()->where('user_id', $user_id);
 		
 		if (isset($first_sortlist)) {
 		
@@ -367,7 +371,7 @@ class LuggagesController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		
+	
 		$request->validate([
 			'loading_date' => 'required',
 			'emptyplace' => 'required',
@@ -419,7 +423,8 @@ class LuggagesController extends Controller
 	}
 	public function destroy_all()
 	{
-		DB::table('luggage')->delete();
+		$user_id = auth()->user()->id;
+		DB::table('luggage')->where('user_id', $user_id)->delete();
 		session(['luggage_num' => 0]);
 		return redirect('/luggage_edit');
 	}

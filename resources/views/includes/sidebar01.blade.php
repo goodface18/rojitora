@@ -7,21 +7,31 @@
         </div> -->
         <form class="kt-form" id="my_form" method="post" action="{{ route('login') }}">
             {{ csrf_field() }}
+            @if ($errors->has("failed"))
+                <h6 style="color:#e96565">
+                {{$errors->first("failed")}}
+                </h6>
+            @endif
             <div class="kt-portlet__body mb-3">
-                @if(count( $errors ) > 0)
-                    @foreach ($errors->all() as $error)
-                    <h6 style="color:#e96565">{{ $error }}</h6>
-                    @endforeach
-                @endif
                 <div class="form-group mb-3">
                     <label for="memberID">会員ID</label>
                     <input  type="text"  name="member_id" class="form-control form-control-sm {{ $errors->has('identity') ? ' has-error' : '' }}"
-                        value="{{ old('memberID') }}"/>
+                        value="{{ old('member_id') }}"/>
+                        @if ($errors->has("member_id"))
+                            <h6 style="color:#e96565">
+                            {{$errors->first("member_id")}}
+                            </h6>
+                        @endif
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="password">パスワード</label>
                     <input type="password" name="password" id="password" class="form-control form-control-sm"/>
+                    @if ($errors->has("password"))
+                        <h6 style="color:#e96565">
+                        {{$errors->first("password")}}
+                        </h6>
+                    @endif
                 </div>
 
                 <div class="form-group mb-1">

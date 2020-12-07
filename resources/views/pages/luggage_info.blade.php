@@ -197,7 +197,7 @@
                                 @foreach($datas as $data)
                                     <tr>
                                         <td>{{$loop->iteration + $number}}</td>
-                                        <td>{{Auth::user()->corp_name}}</td>
+                                        <td>テラテクニカル</td>
                                         <td>{{$data->person_charge}}</td>
                                         <td>{{$data->phone_number}}</td>
                                         <td>{{$data->loading_date}}</td>

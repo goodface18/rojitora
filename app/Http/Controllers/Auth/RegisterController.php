@@ -100,15 +100,15 @@ class RegisterController extends Controller
             $digits_number = rand(pow(10, $digits-1), pow(10, $digits)-1);
             $member_cnt = DB::table('users')->select('member_id')->where('member_id', '=',$digits_number)->get()->count();
         }while ($member_cnt <> 0);
-        if($fb = fopen("debug.txt","w")){
-            fwrite($fb,$member_cnt . $digits_number);
-            fclose($fb);
-        }
+        
        $this->userdata = User::create([
             'member_id' => $digits_number,
             'corp_name' => $data['corp_name'],
             'second_input' => $data['second_input'],
             'post_address' => $data['post_address'],
+            'first_address' => $data['first_address'],
+            'second_address' => $data['second_address'],
+            'third_address' => $data['third_address'],
             'hello' => $data['hello'],
             'third_input' => $data['third_input'],
             'tel' => $data['tel'],

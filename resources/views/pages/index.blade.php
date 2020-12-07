@@ -134,23 +134,23 @@
                   </thead>
                   <tbody>
                     <tr role="row" class="odd">
-                      <td tabindex="0" class="sorting_1">252086</td>
-                      <td>黒木</td>
+                      <td tabindex="0" class="sorting_1">{{$latest_luggage->id}}</td>
+                      <td>{{$latest_luggage->person_charge}}</td>
                       <td>
-                        05/30
-                        <br />午前
+                        {{$latest_luggage->loading_date}}
+                        <br />{{$latest_luggage->loading_time}}時
                       </td>
                       <td>
-                        埼玉県
-                        <br />久喜市
+                        {{$latest_luggage->loading_space}}
+                        <br />{{$latest_luggage->loading_city}}
                       </td>
                       <td>
-                        05/30
-                        <br />午後
+                       {{$latest_luggage->drop_date}}
+                        <br />{{$latest_luggage->drop_time}}時
                       </td>
                       <td>
-                        埼玉県
-                        <br />所沢市
+                        {{$latest_luggage->drop_space}}
+                        <br />{{$latest_luggage->drop_city}}
                       </td>
                     </tr>
                   </tbody>
@@ -175,15 +175,15 @@
 
                   <tbody>
                     <tr role="row" class="odd">
-                      <td tabindex="0" class="sorting_1">2t</td>
-                      <td>種類１</td>
-                      <td>ロング</td>
-                      <td>Tieba</td>
+                      <td tabindex="0" class="sorting_1">{{$latest_luggage->vehicle_inf}}</td>
+                      <td>{{$latest_luggage->vehicle_type1}}</td>
+                      <td>{{$latest_luggage->vehicle_type2}}</td>
+                      <td>{{$latest_luggage->vehicle_type3}}</td>
                       <td>
-                        住宅材
+                      {{$latest_luggage->baggage_weight}}
                         <br />kg
                       </td>
-                      <td>2ロングワイド平</td>
+                      <td>{{$latest_luggage->bigo}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -271,11 +271,11 @@
                   </thead>
                   <tbody>
                     <tr role="row" class="odd">
-                      <td tabindex="0" class="sorting_1">173632</td>
-                      <td>堀内</td>
+                      <td tabindex="0" class="sorting_1">{{$latest_emptytruck->id}}</td>
+                      <td>{{$latest_emptytruck->person_charge}}</td>
                       <td>
-                        05/31
-                        <br />午前
+                      {{$latest_emptytruck->emptycar_date}}
+                        <br />{{$latest_emptytruck->emptycar_time}}時
                       </td>
                     </tr>
                   </tbody>
@@ -290,7 +290,7 @@
                   <thead>
                     <tr role="row">
                       <th style="width:10%">空車地</th>
-                      <th style="width:40%">空車地</th>
+                      <th style="width:40%">積可能地</th>
                       <th style="width:15%">荷降日時</th>
                       <th>降可能地</th>
                     </tr>
@@ -299,15 +299,15 @@
                   <tbody>
                     <tr role="row" class="odd">
                       <td tabindex="0" class="sorting_1">
-                        千葉県
-                        <br />野田市
+                      {{$latest_emptytruck->emptycar_space}}
+                        <br />{{$latest_emptytruck->emptycar_city}}
                       </td>
-                      <td>埼玉県、千葉県、東京都、神奈川県</td>
+                      <td>{{$latest_emptytruck->land_pos_loading}}</td>
                       <td>
-                        06/03
-                        <br />午前
+                      {{$latest_emptytruck->drop_date}}
+                        <br />{{$latest_emptytruck->drop_time}}時
                       </td>
-                      <td>茨城県、栃木県、群馬県</td>
+                      <td>{{$latest_emptytruck->land_pos_drop}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -331,16 +331,16 @@
                   <tbody>
                     <tr role="row" class="odd">
                       <td tabindex="0" class="sorting_1">
-                        4t
+                      {{$latest_emptytruck->vehicle_inf}}
                         <br />
                       </td>
                       <td>
-                        ウイング
+                      {{$latest_emptytruck->vehicle_type1}}
                         <br />&nbsp;
                       </td>
-                      <td></td>
-                      <td>後輪エアサス</td>
-                      <td>4tWASPG</td>
+                      <td>{{$latest_emptytruck->vehicle_type2}}</td>
+                      <td>{{$latest_emptytruck->vehicle_type3}}</td>
+                      <td>{{$latest_emptytruck->bigo}}</td>
                     </tr>
                   </tbody>
                 </table>

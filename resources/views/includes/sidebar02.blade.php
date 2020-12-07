@@ -83,11 +83,11 @@
                 </div>
 
                 <div class = "form-group mb-2">
-                    <input type="text" class="col form-control input_style" data-date-format="yyyy-mm-dd" id="kt_datepicker_1" name="loading_start" placeholder="積地を指定" value="{{old('loading_start')}}">
+                    <input type="text" class="col form-control input_style" data-date-format="yyyy-mm-dd" id="kt_datepicker_1" name="loading_start" placeholder="積日を指定" value="{{old('loading_start')}}">
                 </div>
                 <div class = "from_text kt-align-center">～</div>
                 <div class = "form-group mt-2">
-                    <input type="text" class="col form-control input_style" data-date-format="yyyy-mm-dd" id="kt_datepicker_2" name="loading_end" placeholder="積地を指定" value="{{old('loading_end')}}">
+                    <input type="text" class="col form-control input_style" data-date-format="yyyy-mm-dd" id="kt_datepicker_2" name="loading_end" placeholder="積日を指定" value="{{old('loading_end')}}">
                 </div>
 
                 <div class="form-group">
@@ -263,12 +263,12 @@
                 </div>
 
                 <div class = "form-group mb-2">
-                <input type="text" class="col form-control input_style" data-date-format="yyyy-mm-dd" id="kt_datepicker_5" name="loading_start" placeholder="積地を指定">
+                <input type="text" class="col form-control input_style" data-date-format="yyyy-mm-dd" id="kt_datepicker_5" name="loading_start" placeholder="積日を指定">
                 </div>
                 <div class="from_text kt-align-center">～</div>
 
                 <div class = "form-group mt-2">
-                <input type="text" class="col form-control input_style" data-date-format="yyyy-mm-dd" id="kt_datepicker_6" name="loading_end" placeholder="積地を指定">
+                <input type="text" class="col form-control input_style" data-date-format="yyyy-mm-dd" id="kt_datepicker_6" name="loading_end" placeholder="積日を指定">
                 </div>
 
                 <div class="form-group">

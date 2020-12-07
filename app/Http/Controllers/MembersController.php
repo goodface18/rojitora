@@ -20,7 +20,14 @@ class MembersController extends Controller
       $data['emptycar_num'] = session('emptycar_num');
       return view('pages.memberedit', $data);
     }
-
+    //
+    public function memberedit_old(Request $request){
+      $this->middleware('auth');
+      $data['user'] = $request->user();
+      $data['luggage_num'] = session('luggage_num');
+      $data['emptycar_num'] = session('emptycar_num');
+      return view('pages.memberedit_old', $data);
+    }
     //
     public function forget(Request $request){
       $data['luggage_num'] = session('luggage_num');
@@ -77,6 +84,7 @@ class MembersController extends Controller
         'meeting_part' =>'required',
       ));
 
+
       $update_employee->corp_name = $request->corp_name;
       $update_employee->second_input = $request->second_input;
       $update_employee->hello = $request->hello;
@@ -88,6 +96,9 @@ class MembersController extends Controller
       $update_employee->contact_address = $request->contact_address;
       $update_employee->password = bcrypt($request->register_pwd);
       $update_employee->meeting_part = $request->meeting_part;
+      $update_employee->second_address = $request->second_address;
+      $update_employee->third_address = $request->third_address;
+      $update_employee->fourth_address = $request->fourth_address;
       $update_employee->save();
 
       $this->redirectTo = '/register_check/'.$request->user()->id;

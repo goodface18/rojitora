@@ -415,24 +415,7 @@
                                 <span class="bg-white border-dark"></span>
                             </label>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-2 col-form-label kt-font-xl"><i class="fa fa-circle icon" style="font-size:11px;color:#ff6600"></i>電話番号</label>
-                            <div class="col-5 mt-2 mb-3">
-                                <input class="col form-control kt-font-xl input_style" name="phone_number" value="{{old('phone_number')}}">
-                                @if ($errors->has("phone_number"))
-                                    <h5 style="color:#e96565">{{$errors->first("phone_number")}}</h5>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-2 col-form-label kt-font-xl"><i class="fa fa-circle icon" style="font-size:11px;color:#ff6600"></i>担当者</label>
-                            <div class="col-5 mt-2 mb-3">
-                                <input class="col form-control kt-font-xl input_style" name="person_charge" value="{{old('person_charge')}}">
-                                @if ($errors->has("person_charge"))
-                                    <h5 style="color:#e96565">{{$errors->first("person_charge")}}</h5>
-                                @endif
-                            </div>
-                        </div>
+                        
                         <div class="form-group row mb-5 mt-5">
                             <button class="btn btn-primary first_time_btn custom-btn" type="submit" style="width: 300px; height: 80px; border-radius: 10px 10px">登錄内容確認</button>
                         </div>

@@ -199,7 +199,7 @@
                         @foreach($results as $result)
                         <tr>
                             <td>{{$add_number + $loop->iteration}}</td>
-                            <td>{{$result->corp_name}}</td>
+                            <td>テラテクニカル</td>
                             <td>{{$result->person_charge}}</td>
                             <td>{{$result->phone_number}}</td>
                             <td>{{$result->emptycar_date}}</td>

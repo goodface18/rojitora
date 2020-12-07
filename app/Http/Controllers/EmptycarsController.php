@@ -33,8 +33,6 @@ class EmptycarsController extends Controller
 			'beginplace' => 'required',
 			'endplace' => 'required',
 			'drop_date' => 'required',
-			'phone' => 'required|numeric',
-			'person_charge' => 'required',
 			'vehicle' => 'required',
 			'type1' => 'required'
 		];
@@ -48,6 +46,7 @@ class EmptycarsController extends Controller
 		
 		$emptycar = new Emptycar([
 			// 'emptycar_id' => $request->get('emptycar_id'),
+			'user_id' => auth()->user()->id,
 			'urgent_matter' => $request->get('emergency_case'),
 			'emptycar_date' => $request->get('emptycar_date'),
 			'emptycar_time' => $request->get('loading_time'),
@@ -64,8 +63,9 @@ class EmptycarsController extends Controller
 			'vehicle_type2' => $request->get('type2'),
 			'vehicle_type3' => $request->get('type3'),
 			'bigo' => $request->get('bigo'),
-			'phone_number' => $request->get('phone'),
-			'person_charge' => $request->get('person_charge')
+			'phone_number' => '027-386-4141',
+			'person_charge' => '担当'
+			
 		]);
 		$emptycar->save();
 		session(['emptycar_num' => Emptycar::count()]);
@@ -85,7 +85,7 @@ class EmptycarsController extends Controller
 			session(['emptyTruck_page_number' => $request->page_num]);
 			$page_number = session('emptyTruck_page_number');	
 		} else {
-			$page_number = 10;
+			$page_number = session('emptyTruck_page_number');	
 		}
 
 		$data['page_num'] = $page_number;
@@ -108,7 +108,8 @@ class EmptycarsController extends Controller
 		$second_sortflag = session('emptyTruck_second_sortflag');
 		$third_sortlist = session('emptyTruck_third_sortlist');
 		$third_sortflag = session('emptyTruck_third_sortflag');
-		$showdata = Emptycar::query();
+		$user_id = auth()->user()->id;
+		$showdata = Emptycar::query()->where('user_id', $user_id);
 		if (isset($first_sortlist)) {
 		
 			if($first_sortflag == 'asc'){
@@ -143,8 +144,11 @@ class EmptycarsController extends Controller
 	}
 	public function edit()
 	{
-		$data['showdatas'] = Emptycar::Paginate(10);
-		session(['total_rows' => Emptycar::count()]);
+		$user_id = auth()->user()->id;
+		$data['showdatas'] = Emptycar::query()->where('user_id', $user_id)->Paginate(10);
+		// $data['showdatas'] = Emptycar::Paginate(10);
+		$total_rows = Emptycar::query()->where('user_id', $user_id)->count();
+		session(['total_rows' => $total_rows]);
 		$data['total_rows'] = session('total_rows');
 		$data['luggage_num'] = session('luggage_num');
 		$data['emptycar_num'] = session('emptycar_num');
@@ -207,7 +211,8 @@ class EmptycarsController extends Controller
 	}
 	public function destroy_all()
 	{
-		DB::table('emptycars')->delete();
+		$user_id = auth()->user()->id;
+		DB::table('emptycars')->where('user_id', $user_id)->delete();
 		session(['emptycar_num' => 0]);
 		return redirect('/emptyTruck_edit');
 	}
@@ -301,6 +306,7 @@ class EmptycarsController extends Controller
 		$second_sortflag = session('emptyTruck_second_sortflag');
 		$third_sortlist = session('emptyTruck_third_sortlist');
 		$third_sortflag = session('emptyTruck_third_sortflag');
+
 		if (isset($request->page_num)) {
 			session(['emptyTruck_page_number' => $request->page_num]);
 			$page_number = session('emptyTruck_page_number');	

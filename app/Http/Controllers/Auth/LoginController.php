@@ -40,7 +40,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     //Sweet Futrue is customize
 
     public function username()
@@ -53,12 +53,12 @@ class LoginController extends Controller
         $this->validate(
             $request,
             [
-                $this->username() => 'required', 
+                $this->username() => 'required',
                 'password' => 'required',
             ],
             [
                 'member_id.required' => '会員IDを入力してください。',
-                'password.required' => 'パスワードが異なります。'
+                'password.required' => 'パスワードが異なります。',
                 // 'failed' => '会員IDとパスワードが異なります。'
             ]
         );
@@ -75,6 +75,8 @@ class LoginController extends Controller
         session(['emptycar_num' => Emptycar::count()]);
         $data['luggage_num'] = session('luggage_num');
         $data['emptycar_num'] = session('emptycar_num');
+        $data['latest_luggage'] = Luggage::latest()->first();
+        $data['latest_emptytruck'] = Emptycar::latest()->first();
         return view('pages.index',$data);
     }
 
@@ -83,7 +85,7 @@ class LoginController extends Controller
         $request->session()->put('login_error', trans('auth.failed'));
         throw ValidationException::withMessages(
             [
-                'error' => ["会員IDとパスワードが異なります。"],
+                'failed' => ["会員IDとパスワードが異なります。"],
             ]
         );
     }

@@ -26,36 +26,27 @@ class AuthController extends Controller
             'register_pwd'  => 'required_with:confirm_pwd|same:confirm_pwd|min:6',
             'confirm_pwd' => 'required',
             'contact_address' => 'required',
-            'meeting_part' =>'required'
+            'meeting_part' =>'required',
         ];
         $customMessages = [
-			'required' => 'ここを入力してください。',
+			      'required' => 'ここを入力してください。',
             'numeric' => 'このカーンは数字である必要があります。',
             'register_pwd.min' => 'パスワードは少なくとも6文字以上入力してください。',
             'register_pwd.required_with' => 'パスワードを入力してください。',
             'register_pwd.same' => '登録パスワードと再確認パスワードが一致しません。',
             'email_address.email' => 'メールアドレスは有効なメールアドレスでなければなりません。',
-            'email.unique' => 'メールアドレスはすでに使用されています。'
+            'email_address.unique' => 'メールアドレスはすでに使用されています。'
 		];
-	
+
 		$this->validate($request, $rules, $customMessages);
 
-        // if ($v->fails())
-        // {
-        //     return response()->json([
-        //         'error' => 'registration_validation_error',
-        //         'errors' => $v->errors()
-        //     ], 422);
-        // }
+       
         $digits = 4;
         do {
             $digits_number = rand(pow(10, $digits-1), pow(10, $digits)-1);
             $member_cnt = DB::table('users')->select('member_id')->where('member_id', '=',$digits_number)->get()->count();
         }while ($member_cnt <> 0);
-        if($fb = fopen("debug.txt","w")){
-            fwrite($fb,$member_cnt . $digits_number);
-            fclose($fb);
-        }           
+    
         $user = new User;
         $user->member_id = $digits_number;
         $user->corp_name = $request->corp_name;
@@ -69,9 +60,11 @@ class AuthController extends Controller
         $user->password = bcrypt($request->register_pwd);
         $user->contact_address = $request->contact_address;
         $user->meeting_part = $request->meeting_part;
+        $user->first_address = $request->first_address;
+        $user->second_address = $request->second_address;
+        $user->third_address = $request->third_address;
         $user->save();
         $user->register_pwd = $request->register_pwd;
-     
         return view("/pages/register_check", ["userdata"=>$user]);
     }
 
@@ -81,7 +74,7 @@ class AuthController extends Controller
         if ($token = $this->guard()->attempt($credentials)) {
             return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
         }
-	
+
         return response()->json(['error' => 'login_error'], 401);
     }
 
@@ -125,4 +118,3 @@ class AuthController extends Controller
         return Auth::guard();
     }
 }
-
